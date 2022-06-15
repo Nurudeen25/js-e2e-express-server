@@ -20,7 +20,10 @@ steps:
     npm run build
   displayName: 'npm install and build'
 
-- task: PublishBuildArtifacts@1    
-  displayName: 'Publish Artifact: drop'
+- task: AzureRmWebAppDeployment@4
   inputs:
-    PathtoPublish: '$(Nurudeen25_js-e2e-express-server)'
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'Azure subscription 1 (b12fd050-370c-400b-ba43-97a516991026)'
+    appType: 'webAppLinux'
+    WebAppName: 'myazdevapp'
+    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
