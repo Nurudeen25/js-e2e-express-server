@@ -4,18 +4,26 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
 
 
+trigger:
+- master
+ 
+pool:
+  vmImage: ubuntu-latest
+ 
 variables:
-  azureSubscription: Azure subscription 1
-
-
+  buildConfiguration: 'Release'
+ 
 steps:
-
-- task: AzureWebApp@1
-  displayName: Azure Web App Deploy
+- script: dotnet build --configuration $(buildConfiguration)
+  displayName: 'dotnet build $(buildConfiguration)'
+ 
+ 
+- task: CopyFiles@2
   inputs:
-    azureSubscription: $(azureSubscription1)
-    appName: myazdevapp
-    package: $(System.DefaultWorkingDirectory)/**/*.zip
-
-  
+    targetFolder: '$(Build.ArtifactStagingDirectory)'    
+ 
+- task: PublishBuildArtifacts@1    
+  displayName: 'Publish Artifact: drop'
+  inputs:
+    PathtoPublish: '$(build.artifactstagingdirectory)'
 
