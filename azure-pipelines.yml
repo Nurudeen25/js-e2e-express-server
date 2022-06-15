@@ -20,6 +20,7 @@ steps:
     npm run build
   displayName: 'npm install and build'
   
-  steps:
-- publish: $(build.artifactstagingdirectory)
-  artifact: WebApp
+- task: PublishBuildArtifacts@1    
+  displayName: 'Publish Artifact: drop'
+  inputs:
+    PathtoPublish: '$(build.artifactstagingdirectory)'
