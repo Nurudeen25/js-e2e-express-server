@@ -3,24 +3,19 @@
 # Add steps that analyze code, save build artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
 
-trigger:
-- main
 
-pool:
-  vmImage: ubuntu-latest
+variables:
+  azureSubscription: Azure subscription 1
+
 
 steps:
-- task: NodeTool@0
-  inputs:
-    versionSpec: '10.x'
-  displayName: 'Install Node.js'
 
-- script: |
-    npm install
-    npm run build
-  displayName: 'npm install and build'
-  
-- task: PublishBuildArtifacts@1    
-  displayName: 'Publish Artifact: drop'
+- task: AzureWebApp@1
+  displayName: Azure Web App Deploy
   inputs:
-    PathtoPublish: '$(build.artifactstagingdirectory)'
+    azureSubscription: $(azureSubscription1)
+    appName: myazdevapp
+    package: $(System.DefaultWorkingDirectory)/**/*.zip
+
+  
+
