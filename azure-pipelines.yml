@@ -3,13 +3,13 @@
 # Add steps that analyze code, save build artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
 
-
-- task: AzureWebApp
+- task: AzureRmWebAppDeployment@4
   inputs:
     ConnectionType: 'AzureRM'
-    azureSubscription: 'Azure subscription 1(b12fd050-370c-400b-ba43-97a516991026)'
+    azureSubscription: 'Azure subscription 1 (b12fd050-370c-400b-ba43-97a516991026)'
     appType: 'webAppLinux'
     WebAppName: 'myazdevapp'
+    deployToSlotOrASE: true
+    ResourceGroupName: 'myapp-rg'
+    SlotName: 'production'
     packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
-    RuntimeStack: 'JAVA|11-java11'
-
