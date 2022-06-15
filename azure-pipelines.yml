@@ -4,7 +4,7 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
 
 
-- task: AzureRmWebAppDeployment@4
+- task: AzureWebApp
   inputs:
     ConnectionType: 'AzureRM'
     azureSubscription: 'Azure subscription 1(b12fd050-370c-400b-ba43-97a516991026)'
