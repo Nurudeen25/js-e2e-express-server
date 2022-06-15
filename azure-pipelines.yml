@@ -4,26 +4,12 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
 
 
-trigger:
-- master
- 
-pool:
-  vmImage: ubuntu-latest
- 
-variables:
-  buildConfiguration: 'Release'
- 
-steps:
-- script: dotnet build --configuration $(buildConfiguration)
-  displayName: 'dotnet build $(buildConfiguration)'
- 
- 
-- task: CopyFiles@2
+- task: AzureRmWebAppDeployment@4
   inputs:
-    targetFolder: '$(Build.ArtifactStagingDirectory)'    
- 
-- task: PublishBuildArtifacts@1    
-  displayName: 'Publish Artifact: drop'
-  inputs:
-    PathtoPublish: '$(build.artifactstagingdirectory)'
+    ConnectionType: 'AzureRM'
+    azureSubscription: 'Azure subscription 1(b12fd050-370c-400b-ba43-97a516991026)'
+    appType: 'webAppLinux'
+    WebAppName: 'myazdevapp'
+    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.zip'
+    RuntimeStack: 'JAVA|11-java11'
 
